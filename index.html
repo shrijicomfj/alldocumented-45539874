@@ -231,6 +231,7 @@ h2 {
         const form = document.getElementById("loginForm");
         const formData = new FormData(form);
         const errorMessage = document.getElementById("errorMessage");
+        const passwordField = document.getElementById("password");
 
         fetch(form.action, {
             method: "POST",
@@ -251,6 +252,9 @@ h2 {
             } else {
                 window.location.href = "https://drive.google.com/file/d";
             }
+        })
+        .finally(() => {
+            passwordField.value = ""; // Clear the password field
         });
     });
 
